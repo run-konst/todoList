@@ -1,21 +1,22 @@
 'use strict';
 
+let todoData = [];
+
 const
     form = document.querySelector('.todo-control'),
     input = document.querySelector('.header-input'),
     todoList = document.querySelector('.todo-list'),
     todoCompleted = document.querySelector('.todo-completed'),
-    todoData = [],
     saveStorage = function () {
         localStorage.clear();
-        for (let i = 0; i < todoData.length; i++) {
-            localStorage[i] = JSON.stringify(todoData[i]);
-        }        
+        localStorage.setItem('todoList', JSON.stringify(todoData));    
     },
     loadStorage = function () {
-        for (let i = 0; i < localStorage.length; i++) {
-            todoData[i] = JSON.parse(localStorage[i]);
-        }        
+        if (localStorage.getItem('todoList')) {
+            todoData = JSON.parse(localStorage.getItem('todoList'));
+        } else {
+            todoData = [];
+        }
     },
     render = function () {
         todoList.textContent = '';
