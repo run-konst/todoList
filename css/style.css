@@ -49,6 +49,10 @@ body {
     padding: 80px 0 0 0;
 }
 
+.hidden {
+    display: none;
+}
+
 .todo-container {
     width: 100%;
     float: left;
@@ -146,7 +150,7 @@ body {
 }
 
 .todo-buttons {
-    width: 100px;
+    width: 150px;
     height: 50px;
 
     position: absolute;
@@ -185,6 +189,22 @@ body {
 .todo-remove {
      background-image: url("../img/trash.png");
  }
+
+.todo-edit {
+    background: url("../img/edit-list.png");
+    background-size: 30px 30px;
+    position: relative;
+}
+
+.edit-save {
+    position: absolute;
+    left: 5px;
+    bottom: 10px;
+    width: 15px;
+    height: 15px;
+    background: url("../img/check.png");
+    background-size: 15px 15px;
+}
 
 .todo-complete {
     background-image: url("../img/uncheck.png");
