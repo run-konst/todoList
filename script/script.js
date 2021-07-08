@@ -1,9 +1,10 @@
 'use strict';
 
 class Todo {
-    constructor(form, input, todoList, todoCompleted) {
+    constructor(form, input, todoContainer, todoList, todoCompleted) {
         this.form = document.querySelector(form);
         this.input = document.querySelector(input);
+        this.todoContainer = document.querySelector(todoContainer);
         this.todoList = document.querySelector(todoList);
         this.todoCompleted = document.querySelector(todoCompleted);
         this.todoData = new Map(JSON.parse(localStorage.getItem('todoList')));
@@ -68,14 +69,26 @@ class Todo {
         this.render();
         mark.classList.toggle('hidden');
     }
-    deleteItem(key) {
+    deleteItem(li, key) {
+        li.style.transform = 'translateX(-150%)';
         this.todoData.delete(key);
-        this.render();
+        setTimeout(() => this.render(), 400);
     }
-    completeItem(key) {
+    completeItem(li, key) {
         const todo = this.todoData.get(key);
         todo.completed = !todo.completed;
-        this.render();        
+        const clone = li.cloneNode(true);
+        clone.classList.add('cloned');
+        this.todoContainer.append(clone);
+        clone.style.top = `${li.getBoundingClientRect().y + pageYOffset}px`;
+        this.render();
+        const liAfterRender = document.querySelector(`[data-key="${key}"]`)
+        liAfterRender.style.opacity = '0';
+        clone.style.top = `${liAfterRender.getBoundingClientRect().y + pageYOffset}px`;
+        setTimeout(() => {
+            liAfterRender.style.opacity = '1';
+            clone.remove();
+        }, 500);
     }
     handler() {
         window.addEventListener('click', event => {
@@ -89,10 +102,10 @@ class Todo {
                 this.editItem(li, key);
             }
             if (target.classList.contains('todo-remove')) {
-                this.deleteItem(key);
+                this.deleteItem(li, key);
             }
             if (target.classList.contains('todo-complete')) {
-                this.completeItem(key);
+                this.completeItem(li, key);
             }
         });
         
@@ -104,6 +117,6 @@ class Todo {
     }
 }
 
-const todo = new Todo('.todo-control', '.header-input', '.todo-list', '.todo-completed');
+const todo = new Todo('.todo-control', '.header-input', '.todo-container', '.todo-list', '.todo-completed');
 
 todo.init();

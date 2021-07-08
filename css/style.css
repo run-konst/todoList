@@ -33,9 +33,12 @@ a {
 }
 
 ul {
-    list-style: none;
     padding: 0;
     margin: 0;
+}
+
+li {
+    list-style: none;
 }
 
 h1, h2, h3, p {
@@ -143,6 +146,15 @@ body {
     margin: 0 0 10px 0;
     padding: 14px 100px 14px 14px;
     word-break: break-word;
+
+    transition: transform 0.5s ease;
+}
+
+.cloned {
+    max-width: 770px;
+    display: block;
+    position: absolute;
+    transition: top 0.5s ease;
 }
 
 .todo-item:last-of-type {
